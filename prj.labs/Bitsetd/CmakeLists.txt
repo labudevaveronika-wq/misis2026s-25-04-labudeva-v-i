@@ -1,1 +1,7 @@
-add_library(bitsetd bitsetd.cpp bitsetd.hpp)
+# add_library(bitsetd bitsetd.cpp bitsetd.hpp)
+
+add_library(bitsetd_lab STATIC
+    BitsetD.cpp
+)
+
+target_include_directories(bitsetd_lab PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

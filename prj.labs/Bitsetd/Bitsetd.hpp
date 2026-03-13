@@ -12,6 +12,7 @@ class BitsetD {
         BitsetD() = default;
         ~BitsetD() = default;
 
+
         BitsetD(const BitsetD& src);
         BitsetD(const std::int32_t size, const bool val);
         BitsetD(const std::uint64_t mask, const int32_t size = 64);
@@ -31,7 +32,7 @@ class BitsetD {
         BitsetD& operator|=(const BitsetD& rhs);
         BitsetD& operator^=(const BitsetD& rhs);
 
-        bool operator==(const BitsetD& rhs) noexcept;
+        bool operator==(const BitsetD& rhs) const noexcept;
 
         std::int32_t size() const noexcept 
         {
