@@ -161,6 +161,42 @@ bool BitsetD::operator==(const BitsetD& rhs) const noexcept
     return true;
 }
 
+std::string BitsetD::to_string(const StrFormat fmt, const int32_t len) const
+{
+    if (size_ == 0) {
+        return "empty";
+    }
+
+    std::string result = "";
+
+    if (fmt == StrFormat::Bin || fmt == StrFormat::BinNoPreSep) {
+        if (fmt == StrFormat::Bin) result = "b0";
+
+        for (int32_t i = size_ - 1; i >= 0; --i) {
+            if (get(i)) {
+                result += '1';
+            } else {
+                result += '0';
+            }
+
+            bool is_bin_format = (fmt == StrFormat::Bin);
+            bool is_every_fourth = (i % 4 == 0);
+            bool is_not_last = (i > 0);
+            
+            if (is_bin_format && is_not_last && is_every_fourth) {
+                result += '\'';
+            }
+        }
+    } 
+    //TODO:  Oct по аналогии с Hex
+
+    if (len > 0 && (int32_t)result.length() < len) {
+        result.insert(0, len - result.length(), '0');
+    }
+
+    return result;
+}
+
 BitsetD& BitsetD::shift(const std::int32_t idx) noexcept
 {
     if (size_ == 0) return *this;

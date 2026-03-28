@@ -39,6 +39,20 @@ class BitsetD {
 
         bool operator==(const BitsetD& rhs) const noexcept;
 
+        explicit operator std::uint64_t() const;
+        explicit operator std::uint32_t() const;
+
+        enum class StrFormat : int32_t {
+            Bin = 1,     
+            BinNoPreSep,  
+            Oct,
+            Hex,
+            Def = Bin,
+            Default = Def
+        };
+
+        std::string to_string(const StrFormat fmt = StrFormat::Def, const int32_t len = 0) const;
+
         std::int32_t size() const noexcept 
         {
             return size_;
@@ -54,6 +68,7 @@ class BitsetD {
             bool val_ = false;
             BitR() = delete;
             BitR(const BitR&) = delete;
+            BitR& operator=(const BitR&) = delete;
         };
         class BitW {
             friend class BitsetD;
@@ -69,8 +84,8 @@ class BitsetD {
             BitW() = delete;
             BitW(const BitW&) = delete;
         };
-        BitW operator[](const std::int32_t idx) { return BitW(*this, idx); }
-        BitR operator[](const std::int32_t idx) const { return BitR(*this, idx); }
+        BitW operator[](const std::int32_t idx) & { return BitW(*this, idx); }
+        BitR operator[](const std::int32_t idx) const & { return BitR(*this, idx); }
 
     private:
 
