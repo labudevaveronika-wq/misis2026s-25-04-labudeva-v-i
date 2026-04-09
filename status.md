@@ -1,7 +1,5 @@
-STAMP: 20260402-093943
-ERROR: file CMakeLists.txt is absent
+STAMP: 20260409-140814
 ERROR: file prj.labs/arrayt/CMakeLists.txt is absent
-ERROR: file prj.labs/arrayt/arrayt.hpp is absent
 ERROR: file prj.test/arrayt_test.cpp is absent
 ERROR: file prj.test/bitsetd_profiler.cpp is absent
 ERROR: CMake generator failed
