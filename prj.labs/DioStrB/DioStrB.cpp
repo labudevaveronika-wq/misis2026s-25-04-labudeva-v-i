@@ -1,19 +1,22 @@
 #include "DioStrB.hpp"
-#include <sstream>
-
 
 void DioStrB::save(const std::string& str) {
     str_string = str;
 }
 
-
 std::ostream& DioStrB::writeti(std::ostream& out) const {
-    out << str_string;
+    size_t len = str_string.length();
+    out.write((char*)&len, sizeof(len));
+    out.write(str_string.c_str(), len);
     return out; 
 }
 
 std::istream& DioStrB::readfrom(std::istream& in) {
-    in >> str_string;
+    size_t len = 0;
+    if (in.read((char*)&len, sizeof(len))) {
+        str_string.resize(len);
+        in.read(&str_string[0], len);
+    }
     return in; 
 }
 
