@@ -12,18 +12,18 @@ template<typename T, typename S>
 ArrayT<T, S>::ArrayT(const ArrayT& src) 
     : capacity_(src.size_)
     , size_(capacity_)
-    , data_(new T[size_]) {
-    std::copy(data_, src.data_, size_ * sizeof(*data_));
+    , data_(src.size_ > 0 ? new T[src.size_] : nullptr) {
+    for (S i = 0; i < size_; ++i) {
+        data_[i] = src.data_[i];
+    }
 }
   
 template<typename T, typename S>
-ArrayT<T, S>::ArrayT(const S size)
-    : capacity_(size)
-    , size_(size) { 
-    if (size_ < 0) {
-        throw std::invalid_argument("ArrayT::ArrayT - negative size");
-    }
-    data_ = (capacity_ > 0) ? new T[capacity_]() : nullptr;
+ArrayT<T, S>::ArrayT(const S size) {
+    if (size < 0) throw std::invalid_argument("ArrayT: negative size");
+    size_ = size;
+    capacity_ = size;
+    data_ = (size > 0) ? new T[size]() : nullptr;
 }
 
 template<typename T, typename S>
@@ -33,70 +33,75 @@ ArrayT<T, S>::~ArrayT() {
   
 template<typename T, typename S>
 ArrayT<T, S>& ArrayT<T, S>::operator=(const ArrayT& rhs) {
-    if (this != & rhs) {
-        resize(rhs.size_);
-        std::memcpy(data_, rhs.data_, size_ * sizeof(*data_));
+    if (this != &rhs) {
+        T* new_data = nullptr;
+        if (rhs.size_ > 0) {
+            new_data = new T[rhs.size_];
+            for (S i = 0; i < rhs.size_; ++i) {
+                new_data[i] = rhs.data_[i];
+            }
+        }
+        delete[] data_;
+        data_ = new_data;
+        size_ = rhs.size_;
+        capacity_ = rhs.size_;
     }
     return *this;
 }
  
 template<typename T, typename S>
 void ArrayT<T, S>::resize(const S size) {
-    if (size < 0) {
-        throw std::invalid_argument("ArrayT::resize - non positive size");
-    }
-    if (capacity_ < size) {
-        auto data = new T[size]{0.0};
-        if (0 < size_) {
-            std::memcpy(data, data_, size_ * sizeof(*data_));
+    if (size < 0) throw std::invalid_argument("ArrayT: negative size");
+    
+    if (size > capacity_) {
+        S new_capacity = (capacity_ > 0) ? capacity_ * 2 : size;
+        if (new_capacity < size) new_capacity = size;
+
+        T* new_data = new T[new_capacity]();
+        for (S i = 0; i < size_; ++i) {
+            new_data[i] = std::move(data_[i]);
         }
-        std::swap(data_, data);
-        delete[] data;
-        capacity_ = size;
-    } else {
-        if (size_ < size) {
-            std::memset(data_ + size_, 0, (size - size_) * sizeof(*data_));
-        }
+        delete[] data_;
+        data_ = new_data;
+        capacity_ = new_capacity;
     }
     size_ = size;
 }
   
 template<typename T, typename S>
 T& ArrayT<T, S>::operator[](const S idx) {
-    if (idx < 0 || size_ <= idx) {
-        throw std::invalid_argument("ArrayT::operator[] - invalid index");
-    }
-    return *(data_ + idx);
-}
-
-template<typename T, typename S>
-T ArrayT<T, S>::operator[](const S idx) const {
-    if (idx < 0 || size_ <= idx) {
-        throw std::invalid_argument("ArrayT::operator[] - invalid index");
+    if (idx < 0 || idx >= size_) {
+        throw std::out_of_range("ArrayT: index out of range");
     }
     return data_[idx];
 }
 
 template<typename T, typename S>
-void ArrayT<T, S>::insert(const S idx, const T val) {
-    if (idx < 0 || size_ < idx) {
-        throw std::invalid_argument("ArrayT::Insert - invalid index");
+const T& ArrayT<T, S>::operator[](const S idx) const {
+    if (idx < 0 || idx >= size_) {
+        throw std::out_of_range("ArrayT: index out of range");
     }
+    return data_[idx];
+}
+
+template<typename T, typename S>
+void ArrayT<T, S>::insert(const S index, const T val) {
+    if (index < 0 || index > size_) throw std::out_of_range("ArrayT: invalid index");
+    
+    S old_size = size_;
     resize(size_ + 1);
-    if (idx != size() - 1) {
-        std::memmove(data_ + idx + 1, data_ + idx, (size_ - idx - 1) * sizeof(T));
+    for (S i = old_size; i > index; --i) {
+        data_[i] = std::move(data_[i - 1]);
     }
-    data_[idx] = val;
+    data_[index] = val;
 }
 
 template<typename T, typename S>
 void ArrayT<T, S>::remove(const S idx) {
-    if (idx < 0 || size_ <= idx) {
-        throw std::invalid_argument("ArrayT::operator[] - invalid index");
+    if (idx < 0 || idx >= size_) throw std::out_of_range("ArrayT: invalid index");
+    
+    for (S i = idx; i < size_ - 1; ++i) {
+        data_[i] = std::move(data_[i + 1]);
     }
-    if (idx != size_ - 1) {
-        // удаляем НЕ в конце
-        std::memmove(data_ + idx, data_ + idx + 1, (size_ - idx) * sizeof(T));
-    }
-    resize(size_ - 1);
+    size_--;
 }

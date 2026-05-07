@@ -44,4 +44,4 @@ class ArrayT {
         T* data_ = nullptr;             //!< буффер
 };
 
-#endif // !ARRAYD_ARRAYD_HPP_20260319
+#endif
