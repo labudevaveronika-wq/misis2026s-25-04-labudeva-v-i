@@ -368,7 +368,7 @@ BitsetD& BitsetD::operator^=(const BitsetD& rhs) {
     return *this;
 }
 
-BitsetD operator<<(const BitsetD &lhs, const std::int32_t shift)
+BitsetD operator<<(const BitsetD& lhs, const std::int32_t shift)
 {
     if (shift < 0) {
         throw std::invalid_argument("BitsetD::operator<<: shift cannot be negative");
