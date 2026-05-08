@@ -456,7 +456,7 @@ TEST_CASE("proxy classes (if operator[] enabled)") {
 #include <sstream>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "../prj.labs/prj.thirdparty/doctest/doctest.h"
+#include "../prj.thirdparty/doctest/doctest.h"
 #include <limits>
 
 TEST_CASE("Basic BitsetD functionality") {
