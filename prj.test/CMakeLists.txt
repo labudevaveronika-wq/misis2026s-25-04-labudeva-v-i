@@ -1,3 +1,5 @@
+include_directories(BEFORE ../prj.labs)
+
 add_executable(arrayd_test arrayd_test.cpp)
 target_link_libraries(arrayd_test arrayd)
 
