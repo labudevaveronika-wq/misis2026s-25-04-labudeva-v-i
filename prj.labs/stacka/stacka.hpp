@@ -28,8 +28,8 @@ void resize(const size_t new_size);
 
 private:
     size_t size=0;
-    ptrdiff_t capacity = 0;
-    int64_t* data = 0;
+    size_t capacity = 0;
+    int64_t* data = nullptr;
 
 };
 
