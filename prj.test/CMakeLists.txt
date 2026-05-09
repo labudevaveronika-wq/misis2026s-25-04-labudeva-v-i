@@ -3,8 +3,8 @@ include_directories(BEFORE ../prj.labs)
 add_executable(arrayd_test arrayd_test.cpp)
 target_link_libraries(arrayd_test arrayd)
 
-# add_executable(arrayt_test arrayt_test.cpp)
-# target_link_libraries(arrayt_test arrayt)
+add_executable(arrayt_test arrayt_test.cpp)
+target_link_libraries(arrayt_test arrayt)
 
 add_executable(bitsetd_test bitsetd_test.cpp)
 target_link_libraries(bitsetd_test bitsetd)
@@ -12,15 +12,15 @@ target_link_libraries(bitsetd_test bitsetd)
 add_executable(complex_test complex_test.cpp)
 target_link_libraries(complex_test complex)
 
-# add_executable(dio_test dio_test.cpp)
-# target_link_libraries(dio_test dio)
+add_executable(dio_test dio_test.cpp)
+target_link_libraries(dio_test dio)
 
-# add_executable(queuea_test queuea_test.cpp)
-# target_link_libraries(queuea_test queuea)
+add_executable(queuea_test queuea_test.cpp)
+target_link_libraries(queuea_test queuea)
 
 
-# add_executable(queuel_test queuel_test.cpp)
-# target_link_libraries(queuel_test queuel)
+add_executable(queuel_test queuel_test.cpp)
+target_link_libraries(queuel_test queuel)
 
 add_executable(rational_test rational_test.cpp)
 target_link_libraries(rational_test rational)
