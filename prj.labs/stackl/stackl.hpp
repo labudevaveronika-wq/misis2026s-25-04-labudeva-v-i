@@ -11,7 +11,7 @@ public:
 
   StackL(const StackL& src);
 
-  ~StackL() = default;
+  ~StackL();
   
   StackL& operator=(const StackL& src);
 

@@ -15,6 +15,11 @@ StackL::StackL(const StackL& src)
   }
 }
 
+StackL::~StackL()
+{
+  clear();
+}
+
 StackL& StackL::operator=(const StackL& src)
 {
     if (this != &src) {

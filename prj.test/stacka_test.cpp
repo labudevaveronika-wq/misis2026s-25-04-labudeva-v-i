@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest/doctest.h"
-#include "stacka/stacka.hpp"
+#include "../prj.labs/stacka/stacka.hpp"
 #include <iostream>
 
 TEST_CASE("Default constructor creates empty stack") {
