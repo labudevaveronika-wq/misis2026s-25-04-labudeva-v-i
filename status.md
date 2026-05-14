@@ -1,8 +1,5 @@
-STAMP: 20260508-134442
-ERROR: file prj.test/queuea_test.cpp is absent
-ERROR: file prj.test/queuel_test.cpp is absent
+STAMP: 20260514-142445
 ERROR: file prj.test/bitsetd_profiler.cpp is absent
-ERROR: file prj.test/dio_test.cpp is absent
 OK: CMake generator successed
 ERROR: lab bitsetd - test build failed
 ERROR: lab bitsetd_m - test build failed
