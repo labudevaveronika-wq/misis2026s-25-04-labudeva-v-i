@@ -1,4 +1,4 @@
-STAMP: 20260514-142445
+STAMP: 20260515-103437
 ERROR: file prj.test/bitsetd_profiler.cpp is absent
 OK: CMake generator successed
 ERROR: lab bitsetd - test build failed
